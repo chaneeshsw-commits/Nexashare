@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Files Preview - NovaShare</title>
+
+<style>
+
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ================= BODY ================= */
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg, #1c1c1c, #2a2a2a, #3a3a3a);
+    color:white;
+    padding:20px;
+}
+
+/* ================= CONTAINER ================= */
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+/* ================= TITLE ================= */
+.title{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:10px;
+
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:25px;
+    font-size:13px;
+}
+
+/* ================= FILE CARD ================= */
+.file-card{
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    backdrop-filter: blur(12px);
+}
+
+/* ================= FILE NAME ================= */
+.file-name{
+    font-size:15px;
+    margin-bottom:12px;
+    word-break:break-word;
+}
+
+/* ================= IMAGE PREVIEW ================= */
+.preview-img{
+    width:100%;
+    max-height:300px;
+    object-fit:contain;
+    border-radius:12px;
+    background:white;
+    padding:8px;
+    margin-bottom:12px;
+}
+
+/* ================= BUTTON ================= */
+.btn{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:12px;
+    text-decoration:none;
+    color:white;
+    margin-right:10px;
+    margin-top:8px;
+
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.03);
+}
+
+.delete-btn{
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+}
+
+/* ================= BACK BUTTON ================= */
+.center{
+    text-align:center;
+    margin-top:25px;
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:500px){
+    .title{
+        font-size:20px;
+    }
+
+    .btn{
+        display:block;
+        width:100%;
+        margin-right:0;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2 class="title">📦 Uploaded Files Preview</h2>
+    <p class="subtitle">View all uploaded files here</p>
+
+    {% for file in files %}
+    <div class="file-card">
+
+        <div class="file-name">
+            📄 {{ file }}
+        </div>
+
+        <!-- Image preview only -->
+        {% if file.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+            <img src="{{ url_for('uploaded_file', filename=file) }}" class="preview-img">
+        {% endif %}
+
+        <!-- Open Button -->
+        <a href="{{ url_for('uploaded_file', filename=file) }}"
+           target="_blank"
+           class="btn">
+           📂 Open
+        </a>
+
+        <!-- Download Button -->
+        <a href="{{ url_for('uploaded_file', filename=file) }}"
+           download
+           class="btn">
+           ⬇ Download
+        </a>
+
+    </div>
+    {% endfor %}
+
+    <div class="center">
+        <a href="/" class="btn">⬅ Back to Home</a>
+    </div>
+
+</div>
+
+</body>
+</html>
