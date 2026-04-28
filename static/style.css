@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f1115;
+    color: white;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+    padding: 30px;
+}
+
+.card, .file-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(20px);
+}
+
+input, select, button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: none;
+}
+
+button {
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+}
+
+
+/* share system*/
+.share-btn {
+    padding: 12px 22px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.share-btn:hover {
+    transform: scale(1.05);
+}

@@ -1,254 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaShare Result</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Segoe UI, sans-serif;
-    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
-    min-height:100vh;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-
-/* CONTAINER */
-.container{
-    width:100%;
-    max-width:800px;
-}
-
-/* CARD */
-.card{
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(20px);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:25px;
-    padding:40px;
-    text-align:center;
-}
-
-/* TITLE */
-h1{
-    font-size:2rem;
-    margin-bottom:25px;
-    background: linear-gradient(45deg,#00d4ff,#5b8bf5);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
-}
-
-/* QR IMAGE */
-.qr-image{
-    width:260px;
-    border-radius:20px;
-    margin-bottom:20px;
-    box-shadow: 0 10px 30px rgba(0,212,255,0.2);
-}
-
-/* BUTTON */
-.btn{
-    background: linear-gradient(45deg,#00d4ff,#5b8bf5);
-    border:none;
-    padding:14px 28px;
-    border-radius:50px;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    margin:10px;
-    transition:0.3s;
-}
-
-.btn:hover{
-    transform: translateY(-2px);
-}
-
-/* PREVIEW BOX */
-.preview-box{
-    margin-top:30px;
-    display:none;
-    text-align:left;
-}
-
-.file-item{
-    background: rgba(255,255,255,0.08);
-    padding:14px;
-    border-radius:14px;
-    margin:10px 0;
-}
-
-.file-item a{
-    color:white;
-    text-decoration:none;
-}
-
-/* SHARE BUTTON */
-.share-btn{
-    position:fixed;
-    right:30px;
-    bottom:30px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    border:none;
-    cursor:pointer;
-    font-size:22px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-    color:white;
-    transition:0.3s;
-}
-
-.share-btn:hover{
-    transform: scale(1.1);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-    .container{
-        width:100%;
-        padding:10px;
-    }
-
-    .card{
-        padding:25px 15px;
-        border-radius:20px;
-    }
-
-    h1{
-        font-size:1.6rem;
-    }
-
-    .qr-image{
-        width:220px;
-        max-width:90%;
-    }
-
-    .btn{
-        width:100%;
-        margin:8px 0;
-        padding:14px;
-        font-size:15px;
-    }
-
-    .file-item{
-        padding:12px;
-        font-size:14px;
-        word-break:break-word;
-    }
-
-    .share-btn{
-        width:55px;
-        height:55px;
-        right:20px;
-        bottom:20px;
-        font-size:20px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files Ready - NovaShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
+
+    <h1>Files Ready</h1>
+
+    <!-- QR CODE DISPLAY -->
     <div class="card">
+        <h2>Your QR Code</h2>
 
-        <h1>📲 Your QR Code</h1>
+        <img
+            src="{{ url_for('static', filename=code + '.png') }}"
+            alt="QR Code"
+            style="
+                width:250px;
+                max-width:100%;
+                border-radius:20px;
+                margin-top:20px;
+            "
+        >
 
-        <!-- QR IMAGE -->
-        <img src="/static/qr.png" class="qr-image" id="qrImage">
+        <p style="margin-top:20px;">
+            Scan this QR using mobile, Google Lens,
+            browser scanner, or website scanner
+        </p>
+    </div>
 
-        <br>
+    <div class="card">
+    <h2>Uploaded Files</h2>
 
-        <!-- DOWNLOAD -->
-        <a href="/static/qr.png" download="NovaShare_QR.png">
-            <button class="btn">⬇ Download</button>
+    <button onclick="toggleFiles()" class="share-btn">
+        More Files
+    </button>
+
+    <div id="filesList" style="display:none; margin-top:20px;">
+
+        {% for file in files %}
+        <div class="file-card">
+            <p>{{ file.filename }}</p>
+
+            <a href="/preview/{{ file.filename }}"
+               class="share-btn">
+               Preview
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <br><br>
+
+    <a href="/download-all/{{ code }}"
+       class="share-btn">
+       Download All Files
+    </a>
+
+</div>
+
+
+<a href="{{ url_for('static', filename=code + '.png') }}"
+   download
+   style="
+      display:inline-block;
+      margin-top:20px;
+      padding:12px 24px;
+      background:white;
+      color:black;
+      text-decoration:none;
+      border-radius:12px;
+      font-weight:bold;
+   ">
+   Download QR Code
+</a>
+
+
+    <!-- SHARE SECTION -->
+   <div class="card">
+    <h2>Share</h2>
+
+    <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/?text={{ request.url }}"
+           target="_blank"
+           class="share-btn">
+           WhatsApp
         </a>
 
-        <!-- PREVIEW -->
-        <button class="btn" onclick="togglePreview()">👁 Preview Files</button>
+        <!-- Telegram -->
+        <a href="https://t.me/share/url?url={{ request.url }}"
+           target="_blank"
+           class="share-btn">
+           Telegram
+        </a>
 
-        <!-- BACK -->
-        <button class="btn" onclick="goBack()">⬅ Back</button>
+        <!-- Email -->
+        <a href="mailto:?subject=NovaShare Files&body={{ request.url }}"
+           class="share-btn">
+           Email
+        </a>
 
-        <!-- FILE PREVIEW -->
-        <div class="preview-box" id="previewBox">
+        <!-- Copy Link -->
+        <button onclick="copyLink()" class="share-btn">
+            Copy Link
+        </button>
 
-            <h3>Uploaded Files</h3>
-
-            {% for file in files %}
-            <div class="file-item">
-                <a href="/uploads/{{ file }}" target="_blank">
-                    📄 {{ file }}
-                </a>
-            </div>
-            {% endfor %}
-
-        </div>
+        <!-- Native Share -->
+        <button onclick="nativeShare()" class="share-btn">
+            Share
+        </button>
 
     </div>
 </div>
 
-<!-- SHARE BUTTON -->
-<button class="share-btn" id="shareBtn">↗️</button>
-
 <script>
-
-/* TOGGLE PREVIEW */
-function togglePreview() {
-    const box = document.getElementById("previewBox");
-    box.style.display = (box.style.display === "block") ? "none" : "block";
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copied successfully!");
 }
-
-/* SHARE BUTTON */
-document.getElementById("shareBtn").addEventListener("click", async function () {
-
-    try {
-        const response = await fetch("/static/qr.png");
-        const blob = await response.blob();
-
-        const file = new File([blob], "NovaShare_QR.png", { type: "image/png" });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-
-            await navigator.share({
-                title: "NovaShare QR",
-                text: "Scan this QR Code",
-                files: [file]
-            });
-
-        } else {
-
-            const qrUrl = window.location.origin + "/static/qr.png";
-            await navigator.clipboard.writeText(qrUrl);
-            alert("QR link copied ✅");
-
-        }
-
-    } catch (error) {
-        console.log(error);
-        alert("Share failed ❌");
-    }
-});
-
-/* BACK */
-function goBack() {
-    window.location.href = "/";
-}
-
 </script>
+<script>
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copied successfully!");
+}
 
+function nativeShare() {
+    if (navigator.share) {
+        navigator.share({
+            title: "NovaShare File Link",
+            text: "Check this shared file",
+            url: window.location.href
+        });
+    } else {
+        alert("Sharing not supported on this device");
+    }
+}
+</script>
+<script>
+function toggleFiles() {
+    let files = document.getElementById("filesList");
+
+    if (files.style.display === "none") {
+        files.style.display = "block";
+    } else {
+        files.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
