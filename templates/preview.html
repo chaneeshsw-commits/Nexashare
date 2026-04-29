@@ -1,13 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Preview</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Preview - NexaShare</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
 <div class="container">
-<h1>Preview</h1>
-<iframe src="/file/{{ filename }}" width="100%" height="700"></iframe>
+
+    <!-- =========================================
+         Header
+    ========================================== -->
+
+    <div class="main-title">
+        <h1>📄 File Preview</h1>
+        <p>Preview your shared file securely before download</p>
+    </div>
+
+    <!-- =========================================
+         Preview Card
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>{{ filename }}</h2>
+
+        <!-- Browser Preview -->
+        <div style="margin-top: 20px;">
+
+            <!-- PDF / Image / Browser Open -->
+            <iframe
+                src="{{ url_for('file_open', filename=filename) }}"
+                width="100%"
+                height="650px"
+                style="
+                    border: none;
+                    border-radius: 14px;
+                    background: white;
+                ">
+            </iframe>
+
+        </div>
+
+        <!-- Open File Button -->
+        <a
+            href="{{ url_for('file_open', filename=filename) }}"
+            target="_blank"
+            class="btn"
+        >
+            Open Full File
+        </a>
+
+        <!-- Back Button -->
+        <a
+            href="javascript:history.back()"
+            class="btn btn-dark"
+        >
+            Back
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <p>© 2026 NexaShare — Premium Secure File Sharing</p>
+    </div>
+
 </div>
+
 </body>
 </html>

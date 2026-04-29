@@ -1,61 +1,327 @@
-body {
+/* =====================================================
+   NexaShare Premium Classic Professional UI
+   Dark Glassmorphism Theme
+===================================================== */
+
+* {
     margin: 0;
-    font-family: Arial;
-    background: #0f1115;
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #0f1115;
+    color: #ffffff;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   Main Container
+===================================================== */
 
 .container {
-    width: 90%;
-    max-width: 900px;
+    width: 92%;
+    max-width: 1100px;
     margin: auto;
+    padding: 40px 20px;
+}
+
+/* =====================================================
+   Header
+===================================================== */
+
+.main-title {
     text-align: center;
+    margin-bottom: 35px;
+}
+
+.main-title h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.main-title p {
+    color: #bfc4cc;
+    font-size: 1rem;
+}
+
+/* =====================================================
+   Premium Glass Card
+===================================================== */
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
     padding: 30px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    margin-bottom: 30px;
+    transition: 0.3s ease;
 }
 
-.card, .file-card {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px 0;
-    backdrop-filter: blur(20px);
+.card:hover {
+    transform: translateY(-2px);
 }
 
-input, select, button {
+/* =====================================================
+   Upload Form
+===================================================== */
+
+form {
     width: 100%;
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 12px;
-    border: none;
 }
 
-button {
-    background: white;
-    color: black;
-    font-weight: bold;
+input,
+select {
+    width: 100%;
+    padding: 14px 16px;
+    margin-top: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s ease;
 }
+
+input:focus,
+select:focus {
+    border-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.06);
+}
+
+input::placeholder {
+    color: #b7bcc5;
+}
+
+/* =====================================================
+   Buttons
+===================================================== */
+
+button,
+.btn {
+    display: inline-block;
+    padding: 14px 24px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #111;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255,255,255,0.08);
+}
+
+/* Secondary Button */
+
+.btn-dark {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.btn-dark:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+/* =====================================================
+   QR Section
+===================================================== */
+
+.qr-box {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.qr-box img {
+    width: 240px;
+    max-width: 100%;
+    border-radius: 14px;
+    background: white;
+    padding: 12px;
+}
+
+/* =====================================================
+   Files List
+===================================================== */
+
+.file-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 18px 20px;
+    margin-top: 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.file-name {
+    font-size: 15px;
+    color: #ffffff;
+    word-break: break-word;
+}
+
+/* =====================================================
+   Share Buttons
+===================================================== */
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* =====================================================
+   QR Scanner
+===================================================== */
+
+#reader {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* =====================================================
+   Password Page
+===================================================== */
+
+.error-text {
+    margin-top: 14px;
+    color: #ff6b6b;
+    font-size: 14px;
+}
+
+/* =====================================================
+   Admin Table
+===================================================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+table th {
+    background: rgba(255,255,255,0.06);
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+}
+
+table td {
+    padding: 14px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+}
+
+table tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+/* =====================================================
+   Links
+===================================================== */
 
 a {
     color: white;
-    margin: 10px;
     text-decoration: none;
 }
 
+/* =====================================================
+   Footer
+===================================================== */
 
-/* share system*/
-.share-btn {
-    padding: 12px 22px;
-    background: white;
-    color: black;
-    border: none;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #9aa0aa;
+    font-size: 14px;
 }
 
-.share-btn:hover {
-    transform: scale(1.05);
+/* =====================================================
+   Mobile Responsive
+===================================================== */
+
+@media (max-width: 768px) {
+    .main-title h1 {
+        font-size: 1.9rem;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    .file-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    button,
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .qr-box img {
+        width: 200px;
+    }
+}
+
+
+/* drop down*/
+/* Dropdown Fix */
+
+select {
+    background: rgba(255,255,255,0.05);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.08);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select option {
+    background: #1a1d24;
+    color: white;
+}
+
+
+
+/* QR Scanner Camera Dropdown Fix */
+
+#reader select {
+    background: #1a1d24 !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+#reader button {
+    border-radius: 12px !important;
 }

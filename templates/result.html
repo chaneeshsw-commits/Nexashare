@@ -3,157 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Files Ready - NovaShare</title>
+    <title>QR Generated - NexaShare</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>Files Ready</h1>
+    <!-- =========================================
+         Header
+    ========================================== -->
 
-    <!-- QR CODE DISPLAY -->
-    <div class="card">
-        <h2>Your QR Code</h2>
-
-        <img
-            src="{{ url_for('static', filename=code + '.png') }}"
-            alt="QR Code"
-            style="
-                width:250px;
-                max-width:100%;
-                border-radius:20px;
-                margin-top:20px;
-            "
-        >
-
-        <p style="margin-top:20px;">
-            Scan this QR using mobile, Google Lens,
-            browser scanner, or website scanner
-        </p>
+    <div class="main-title">
+        <h1> QR Generated Successfully</h1>
+        <p>Your files are ready to share securely</p>
     </div>
 
+    <!-- =========================================
+         Main Card
+    ========================================== -->
+
     <div class="card">
-    <h2>Uploaded Files</h2>
 
-    <button onclick="toggleFiles()" class="share-btn">
-        More Files
-    </button>
+        <h2>Scan This QR Code</h2>
+        <p>Share this QR code to allow secure file access</p>
 
-    <div id="filesList" style="display:none; margin-top:20px;">
+        <!-- QR Code -->
 
-        {% for file in files %}
-        <div class="file-card">
-            <p>{{ file.filename }}</p>
-
-            <a href="/preview/{{ file.filename }}"
-               class="share-btn">
-               Preview
-            </a>
+        <div class="qr-box">
+            <img
+                src="{{ url_for('static', filename=code + '.png') }}"
+                alt="QR Code"
+            >
         </div>
-        {% endfor %}
 
-    </div>
+        <!-- Download QR -->
 
-    <br><br>
-
-    <a href="/download-all/{{ code }}"
-       class="share-btn">
-       Download All Files
-    </a>
-
-</div>
-
-
-<a href="{{ url_for('static', filename=code + '.png') }}"
-   download
-   style="
-      display:inline-block;
-      margin-top:20px;
-      padding:12px 24px;
-      background:white;
-      color:black;
-      text-decoration:none;
-      border-radius:12px;
-      font-weight:bold;
-   ">
-   Download QR Code
-</a>
-
-
-    <!-- SHARE SECTION -->
-   <div class="card">
-    <h2>Share</h2>
-
-    <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
-
-        <!-- WhatsApp -->
-        <a href="https://wa.me/?text={{ request.url }}"
-           target="_blank"
-           class="share-btn">
-           WhatsApp
+        <a
+            href="{{ url_for('static', filename=code + '.png') }}"
+            download
+            class="btn"
+        >
+            Download QR Code
         </a>
 
-        <!-- Telegram -->
-        <a href="https://t.me/share/url?url={{ request.url }}"
-           target="_blank"
-           class="share-btn">
-           Telegram
+        <!-- See Uploaded Files -->
+
+        <a
+            href="{{ url_for('result', code=code) }}"
+            class="btn btn-dark"
+        >
+            See Uploaded Files
         </a>
 
-        <!-- Email -->
-        <a href="mailto:?subject=NovaShare Files&body={{ request.url }}"
-           class="share-btn">
-           Email
+        <!-- Download All Files -->
+
+        <a
+            href="{{ url_for('download_all', code=code) }}"
+            class="btn"
+        >
+            Download All Files
         </a>
 
         <!-- Copy Link -->
-        <button onclick="copyLink()" class="share-btn">
+
+        <button
+            class="btn btn-dark"
+            onclick="copyQRLink()"
+        >
             Copy Link
         </button>
 
-        <!-- Native Share -->
-        <button onclick="nativeShare()" class="share-btn">
-            Share
+        <!-- Share QR -->
+
+        <button
+            class="btn btn-dark"
+            onclick="shareQR()"
+        >
+            Share QR Code
         </button>
 
     </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <p>© 2026 NexaShare — Premium Secure File Sharing</p>
+    </div>
+
 </div>
 
 <script>
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Link copied successfully!");
-}
-</script>
-<script>
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Link copied successfully!");
+const qrPageLink = "{{ request.host_url }}result/{{ code }}";
+
+/* Copy Link */
+
+function copyQRLink() {
+    navigator.clipboard.writeText(qrPageLink)
+        .then(() => {
+            alert("Link copied successfully!");
+        })
+        .catch(() => {
+            alert("Copy failed");
+        });
 }
 
-function nativeShare() {
+/* Share QR */
+
+function shareQR() {
     if (navigator.share) {
         navigator.share({
-            title: "NovaShare File Link",
-            text: "Check this shared file",
-            url: window.location.href
+            title: "NexaShare File Access",
+            text: "Access shared files securely using this link",
+            url: qrPageLink
         });
     } else {
         alert("Sharing not supported on this device");
     }
 }
 </script>
-<script>
-function toggleFiles() {
-    let files = document.getElementById("filesList");
 
-    if (files.style.display === "none") {
-        files.style.display = "block";
-    } else {
-        files.style.display = "none";
-    }
-}
-</script>
 </body>
 </html>

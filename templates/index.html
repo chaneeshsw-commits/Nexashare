@@ -1,37 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaShare</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192.png') }}">
-<script src="https://unpkg.com/html5-qrcode"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaShare – Next Gen QR File Sharing System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
-<div class="container">
-    <h1>📦 NovaShare</h1>
-    <p>Next Gen QR File Sharing System</p>
 
-    <form action="/upload" method="POST" enctype="multipart/form-data" class="card">
-        <input type="file" name="files" multiple required>
-        <input type="password" name="password" placeholder="Optional Password">
-        <select name="expiry">
-            <option value="0">Never Expire</option>
-            <option value="1">1 Day</option>
-            <option value="3">3 Days</option>
-            <option value="7">7 Days</option>
-            <option value="30">30 Days</option>
-        </select>
-        <button type="submit">Upload + Generate QR</button>
-    </form>
+<div class="container">
+
+    <!-- =====================================================
+         Header
+    ====================================================== -->
+
+    <div class="main-title">
+        <h1>📦 NexaShare</h1>
+        <p>Next Gen QR File Sharing System</p>
+    </div>
+
+    <!-- =====================================================
+         Upload Card
+    ====================================================== -->
 
     <div class="card">
-        <h2>Scan QR</h2>
-        <div id="reader"></div>
-    </div>
+
+        <h2>Upload Files + Generate QR</h2>
+        <p>Upload files securely and generate premium QR sharing links</p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+            <!-- Multiple File Upload -->
+            <input
+                type="file"
+                name="files"
+                multiple
+                required
+            >
+
+            <!-- Optional Password -->
+            <input
+                type="password"
+                name="password"
+                placeholder="Optional Password Protection"
+            >
+
+            <!-- Expiry System -->
+            <select name="expiry">
+                <option value="0">Never Expire</option>
+                <option value="1">1 Day</option>
+                <option value="3">3 Days</option>
+                <option value="7">7 Days</option>
+                <option value="30">30 Days</option>
+            </select>
+
+            
+
+            <button onclick="startUpload()">Upload+GenereateQr</button>
+
+        </form>
+
+
+        
+
+<!-- 🔥 PROGRESS BAR HERE -->
+<div id="uploadStatus" style="display:none; color:#00ffcc; margin-top:10px;">
+    ⏳ Uploading... Please wait
 </div>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    </div>
+
+    <!-- =====================================================
+         Scanner Card
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>Scan QR Code</h2>
+        <p>Scan QR instantly using your mobile camera</p>
+
+        <div id="reader"></div>
+
+    </div>
+
+
+
+<div class="footer">
+    <h2>Site Notice</h2>
+
+    <p>
+       
+
+        • Upload one or multiple files securely<br><br>
+
+        • Generate QR instantly for easy sharing<br><br>
+
+        • Preview files before downloading<br><br>
+
+        • Use “Download All Files” for full access<br><br>
+
+        • Password protection available for secure sharing<br><br>
+
+        • Expiry links help control file access<br><br>
+
+        • Scan QR using mobile camera, Google Lens,
+        or built-in scanner
+    </p>
+</div>
+
+
+
+
+
+<div class="footer">
+    <p>
+        Upload securely • Generate QR instantly • Preview before download •
+        Password protection • Expiry links • Built-in QR Scanner
+    </p>
+</div>
+
+
+
+
+
+    <!-- =====================================================
+         Footer
+    ====================================================== -->
+
+    <div class="footer">
+        <p>© 2026 NexaShare — Premium Secure File Sharing</p>
+    </div>
+
+</div>
+
+<!-- =====================================================
+     Scanner Script
+===================================================== -->
+
+<script>
+function onScanSuccess(decodedText, decodedResult) {
+    window.location.href = decodedText;
+}
+
+let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    {
+        fps: 10,
+        qrbox: 250
+    },
+    false
+);
+
+html5QrcodeScanner.render(onScanSuccess);
+
+
+
+
+function startUpload() {
+    document.getElementById("uploadStatus").style.display = "block";
+}
+
+
+
+</script>
+
+<!-- JS -->
+
+
 </body>
 </html>

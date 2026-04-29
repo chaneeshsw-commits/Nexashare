@@ -3,59 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Result - NovaShare</title>
+    <title>Files Access - NexaShare</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>📦 Scan Result</h1>
-    <p>Files found successfully</p>
+    <!-- =========================================
+         Header
+    ========================================== -->
+
+    <div class="main-title">
+        <h1>📦 Shared Files</h1>
+        <p>Securely preview and access all uploaded files</p>
+    </div>
+
+    <!-- =========================================
+         Main Card
+    ========================================== -->
 
     <div class="card">
 
-        <button onclick="toggleFiles()" class="share-btn">
-            More Files
-        </button>
+        <h2>Available Files</h2>
+        <p>Preview files before downloading</p>
 
-        <div id="filesList" style="display:none; margin-top:20px;">
+        <!-- More Files Section -->
 
-            {% for file in files %}
-            <div class="file-card">
-                <p>{{ file.filename }}</p>
+        {% for file in files %}
 
-                <a href="/preview/{{ file.filename }}"
-                   class="share-btn">
-                   Preview
-                </a>
+        <div class="file-card">
+
+            <div class="file-name">
+                📄 {{ file.filename }}
             </div>
-            {% endfor %}
+
+            <!-- Preview Button -->
+            <a
+                href="{{ url_for('preview', filename=file.filename) }}"
+                class="btn"
+            >
+                Preview
+            </a>
 
         </div>
 
-        <br><br>
+        {% endfor %}
 
-        <a href="/download-all/{{ code }}"
-           class="share-btn">
-           Download All Files
+        <!-- Download All Button -->
+
+        <a
+            href="{{ url_for('download_all', code=code) }}"
+            class="btn"
+        >
+            Download All Files
         </a>
 
     </div>
 
+    <!-- Footer -->
+
+    <div class="footer">
+        <p>© 2026 NexaShare — Premium Secure File Sharing</p>
+    </div>
+
 </div>
-
-<script>
-function toggleFiles() {
-    let files = document.getElementById("filesList");
-
-    if (files.style.display === "none") {
-        files.style.display = "block";
-    } else {
-        files.style.display = "none";
-    }
-}
-</script>
 
 </body>
 </html>
